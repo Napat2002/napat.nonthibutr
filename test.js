@@ -1,28 +1,28 @@
 
 function minEnergy(start, shops, stations, target) {
-  // ผมสามารถนั่งรถไฟฟรีได้ไหม
+  // ผมสามารถนั่งโดยสาร
   function isFree(a, b) {
     return stations.includes(a) && stations.includes(b);
   }
 
-  // คิดพลังงานที่ใช้จาก a ไป b
+  // พลังงานที่ใช้จาก a ไป b
   function energy(a, b) {
     if (isFree(a, b)) {
-      return 0;
+      return 0; //เริ่ม
     }
     return Math.abs(a - b);
   }
 
-  // ลองทุกวิธีที่เป็นไปได้
+  // ทุกวิธีที่เป็นไปได้
   function find(current, leftShops, usedEnergy) {
-    // ถ้าแวะครบทุกร้าน
+    // ถ้าแวะทุกร้าน
     if (leftShops.length === 0) {
       return usedEnergy + energy(current, target);
     }
 
     let min = Infinity;
 
-    // ลองเดินไปทุกร้านลำดับต่างๆ
+    // เดินไปทุกร้านลำดับต่างๆ
     for (let i = 0; i < leftShops.length; i++) {
       const nextShop = leftShops[i]; // เดินต่อ
       const remaining = leftShops.filter((_, j) => j !== i); // ร้านที่ยังไปไม่ถึง
@@ -30,7 +30,7 @@ function minEnergy(start, shops, stations, target) {
       const stepEnergy = energy(current, nextShop);
       const total = find(nextShop, remaining, usedEnergy + stepEnergy);
 
-      // ถ้าทางนี้ใช้พลังงานน้อยกว่าทางก่อนหน้า
+      // ถ้าเกิดว่าทางนี้ใช้พลังงานน้อยกว่าทางก่อนหน้า
       if (total < min) {
         min = total;
       }
